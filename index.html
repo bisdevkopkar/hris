@@ -318,11 +318,63 @@ body{
     text-align:center;
 }
 
+.modal-struktur{
+    display:none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content-struktur{
+    position:relative;
+    width:90%;
+    max-width:1200px;
+    max-height:90vh;
+    background:#fff;
+    border-radius:10px;
+    padding:10px;
+    overflow:auto;
+}
+
+.modal-content-struktur img{
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+.close-struktur{
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:32px;
+    font-weight:bold;
+    cursor:pointer;
+    color:red;
+}
+
 </style>
 
 </head>
 
 <body>
+
+<div id="modalStruktur" class="modal-struktur">
+    <div class="modal-content-struktur">
+        <span class="close-struktur"
+              onclick="tutupStruktur()">
+            &times;
+        </span>
+        <img id="imgStruktur"
+             src="struktur.png"
+             alt="Struktur Organisasi">
+    </div>
+</div>
 
 <div class="layout">
     <!-- SIDEBAR -->
@@ -454,17 +506,20 @@ body{
         </div>
 
         <div class="quick-access">
-            <div class="quick-card">
+            <div class="quick-card"
+                onclick="lihatStruktur()">
                 <i class="fas fa-sitemap"></i>
                 <h4>Struktur Organisasi</h4>
             </div>
-            <div class="quick-card">
+            <div class="quick-card"
+                onclick="window.location.href='organisasi.html'">
                 <i class="fas fa-building"></i>
                 <h4>Unit Organisasi</h4>
             </div>
-            <div class="quick-card">
+            <div class="quick-card"
+                onclick="window.location.href='karyawan.html'">
                 <i class="fas fa-id-card"></i>
-                <h4>Daftar Pegawai</h4>
+                <h4>Karyawan</h4>
             </div>
             <div class="quick-card">
                 <i class="fas fa-graduation-cap"></i>
@@ -500,8 +555,7 @@ body{
 document.querySelectorAll('.menu-title')
 .forEach(item => {
     item.addEventListener('click', function(){
-        const submenu =
-        this.nextElementSibling;
+        const submenu = this.nextElementSibling;
         if(submenu){
             if(
                 submenu.style.display === 'block'
@@ -516,13 +570,9 @@ document.querySelectorAll('.menu-title')
 
 });
 
-</script>
-
-<script>
 item.addEventListener('click', function(){
     this.classList.toggle('active');
-    const submenu =
-    this.nextElementSibling;
+    const submenu = this.nextElementSibling;
     if(submenu){
         if(submenu.style.display === 'block'){
             submenu.style.display = 'none';
@@ -531,6 +581,22 @@ item.addEventListener('click', function(){
         }
     }
 });    
+
+function lihatStruktur(){
+    document.getElementById("modalStruktur").style.display = "flex";
+}
+
+function tutupStruktur(){
+    document.getElementById("modalStruktur").style.display = "none";
+}
+
+window.onclick = function(event){
+    const modal = document.getElementById("modalStruktur");
+    if(event.target == modal){
+        modal.style.display = "none";
+    }
+}
+
 </script>
 
 </body>
