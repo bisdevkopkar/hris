@@ -6,7 +6,7 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Biodata Alumni</title>
+<title>Biodata Karyawan KKTK</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -194,7 +194,7 @@ button:hover{
     <div id="loadingSpinner" class="loading-overlay">
     <div class="spinner"></div>
     <div class="loading-text">
-        Loading Biodata Alumni...
+        Loading Biodata Karyawan...
     </div>
 </div>
 
@@ -349,24 +349,15 @@ async function loadData(){
             params.get("noreg");
             if(!noreg){
                 alert("Nomor Register tidak ditemukan");
-                document.getElementById(
-                    "loadingSpinner"
-                ).style.display = "none";
+                document.getElementById("loadingSpinner").style.display = "none";
                 return;
             }
-        const response =
-            await fetch(API_URL);
-        const data =
-            await response.json();
-        const x =
-            data.find(a =>
-                a.noreg == noreg
-            );
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        const x = data.find(a => a.noreg == noreg);
         currentData = x;
         if(!x){
-            document.getElementById(
-                "loadingSpinner"
-            ).style.display = "none";
+            document.getElementById("loadingSpinner").style.display = "none";
             alert("Data tidak ditemukan");
             return;
         }
@@ -374,20 +365,15 @@ async function loadData(){
 
         // FOTO SELESAI DIMUAT
         foto.onload = function(){
-            document.getElementById(
-                "loadingSpinner"
-            ).style.display = "none";
-
+            document.getElementById("loadingSpinner").style.display = "none";
         };
 
         // JIKA FOTO GAGAL
         foto.onerror = function(){
-            document.getElementById(
-                "loadingSpinner"
-            ).style.display = "none";
+            document.getElementById("loadingSpinner").style.display = "none";
         };
-        foto.src =
-            "https://drive.google.com/thumbnail?id=" + x.fotoId + "&sz=w1000";
+        // foto.src = "https://drive.google.com/thumbnail?id=" + x.fotoId + "&sz=w1000";
+        foto.src = "https://lh3.googleusercontent.com/d/" + x.fotoId;
         document.getElementById("noreg")
             .innerHTML = "No Register : " + x.noreg;
         document.getElementById("nama")
@@ -397,25 +383,21 @@ async function loadData(){
         document.getElementById("alamat")
             .innerHTML = "Alamat : " + x.alamat;
         document.getElementById("lahir")
-            .innerHTML = "Tempat/Tanggal Lahir : " + x.tmplahir +
-            ", " + formatTanggal(x.tgllahir);
+            .innerHTML = "Tempat/Tanggal Lahir : " + x.tmplahir + ", " + formatTanggal(x.tgllahir);
         document.getElementById("kelamin")
             .innerHTML = "Jenis Kelamin : " + x.kelamin;
         document.getElementById("tglmasuk")
             .innerHTML = "Tanggal Masuk : " + formatTanggal(x.tglmasuk);
         document.getElementById("jenis")
-            .innerHTML = "Status Pekerja : " + x.jenis +
-            " - " + x.status;
+            .innerHTML = "Status Pekerja : " + x.jenis + " - " + x.status;
         document.getElementById("tglkeluar")
             .innerHTML = "Tanggal Keluar : " + formatTanggal(x.tglkeluar);
         document.getElementById("unit")
-            .innerHTML = "Unit/Bagian : " + x.unit +
-            " - Jabatan " + x.posisi;
+            .innerHTML = "Unit/Bagian : " + x.unit + " - Jabatan " + x.posisi;
         document.getElementById("shift")
             .innerHTML = "Sistim Kerja : " + x.shift;
         document.getElementById("jam")
-            .innerHTML = "Waktu Kerja : " + x.hkerja +" Hari, " +
-            "Jam Kerja " + x.jamm + " - " + x.jamp
+            .innerHTML = "Waktu Kerja : " + x.hkerja +" Hari, " + "Jam Kerja " + x.jamm + " - " + x.jamp
         document.getElementById("kawin")
             .innerHTML = "Status Perkawinan : " + x.kawin;
         document.getElementById("npwp")
@@ -451,15 +433,11 @@ async function loadData(){
 
 async function convertImageToBase64(url){
 
-    const response =
-        await fetch(url);
-    const blob =
-        await response.blob();
+    const response = await fetch(url);
+    const blob = await response.blob();
     return await new Promise(resolve=>{
-        const reader =
-            new FileReader();
-        reader.onloadend =
-            ()=> resolve(reader.result);
+        const reader = new FileReader();
+        reader.onloadend = ()=> resolve(reader.result);
         reader.readAsDataURL(blob);
     });
 }
@@ -552,7 +530,6 @@ async function downloadPDF(){
             "inline-block";
     }
 }
-
 
 loadData();
 
